@@ -36,14 +36,40 @@ def main():
             """
         )
         st.markdown("")
+    
+    system_content="ou are a thoughtful assistant. Respond to all input in 25 words and answer in korea"
+    
+    # session state 초기화
+    if 'chat' not in st.session_state:
+        st.session_state['chat'] =[]
+
+    if 'messages' not in st.session_state:
+        st.session_state['messages'] =[{'role':'system','content':system_content}]
+    
+    if 'check_rest' not in st.session_state:
+        st.session_state['sheck_reset'] = False
+
 
         with st.sidebar:
-            #radio button
+            # radio button -choose GPT model
             model = st.radio(label="gpt model", options=["gpt-3.5-turbo","gpt-4o","gpt-4-turbo"])
             st.markdown("---")
 
             if st.button(label="reset"):
-                pass
+                st.session_state['chat']=[]
+                st.session_state['messages']=[{'role':'system','content':system_content}]
+                st.session_state['check_reset']=True
+
+# 기능구현공간
+col1, col2 = st.columns(2)
+with col1:
+    # left side
+    st.subheader("질문하기")
+with col2:
+    #right side
+    st.subheader("질문/답변")
+
+
 
 if __name__=="__main__":
     print(__name__)
